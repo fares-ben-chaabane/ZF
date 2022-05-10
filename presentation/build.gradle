@@ -1,0 +1,75 @@
+plugins {
+    id 'com.android.library'
+    id 'org.jetbrains.kotlin.android'
+    id 'kotlin-kapt'
+    id 'dagger.hilt.android.plugin'
+}
+
+android {
+    compileSdk 32
+
+    defaultConfig {
+        minSdk 23
+        targetSdk 32
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        consumerProguardFiles "consumer-rules.pro"
+        vectorDrawables {
+            useSupportLibrary true
+        }
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
+    buildFeatures {
+        compose true
+    }
+    composeOptions {
+        kotlinCompilerExtensionVersion "1.1.1"
+    }
+    packagingOptions {
+        resources {
+            excludes += '/META-INF/{AL2.0,LGPL2.1}'
+        }
+    }
+    kapt {
+        correctErrorTypes true
+    }
+}
+
+dependencies {
+
+    implementation libraries.composeCompiler
+    implementation libraries.composeRuntime
+    implementation libraries.composeUi
+    implementation libraries.composeMaterial
+    implementation libraries.composeHilt
+    implementation libraries.composeToolingPreview
+    implementation libraries.activityCompose
+
+    debugImplementation "androidx.compose.ui:ui-tooling:$compose_version"
+
+    implementation project(':domain')
+
+    implementation libraries.kotlin
+    implementation libraries.ktx
+    implementation libraries.appCompat
+
+
+    implementation libraries.coroutines
+    implementation libraries.hilt
+
+
+    kapt libraries.hiltCompiler
+}
